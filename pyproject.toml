@@ -1,0 +1,25 @@
+[project]
+name = "bike-rental-prediction"
+version = "0.1.0"
+description = "Bike Rental Demand Prediction using Machine Learning - Datamites Regression Project"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+    { name = "Data Science Project" }
+]
+keywords = ["machine-learning", "regression", "bike-sharing", "demand-prediction"]
+dependencies = [
+    "fastapi>=0.128.0",
+    "ipykernel>=7.1.0",
+    "ipywidgets>=8.1.8",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.8",
+    "notebook>=7.5.1",
+    "numpy>=2.4.0",
+    "pandas>=2.3.3",
+    "scikit-learn>=1.8.0",
+    "scipy>=1.16.3",
+    "seaborn>=0.13.2",
+    "uvicorn[standard]>=0.40.0",
+    "xgboost>=3.1.2",
+]

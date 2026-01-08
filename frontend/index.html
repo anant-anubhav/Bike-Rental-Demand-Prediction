@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Rental Demand Prediction</title>
+    <link rel="icon" href="static/bike-city-svgrepo-com.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <img src="static/bike-city-svgrepo-com.svg" alt="Bike Logo" class="logo">
+            <h1>Bike Rental Demand Prediction</h1>
+            <p class="subtitle">Predict bike rental demand using Machine Learning</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Prediction Form Card -->
+            <div class="card form-card">
+                <h2>Enter Prediction Parameters</h2>
+                <form id="predictionForm">
+                    <!-- Row 1: Time Features -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="season">Season</label>
+                            <select id="season" name="season" required>
+                                <option value="1">Spring</option>
+                                <option value="2">Summer</option>
+                                <option value="3" selected>Fall</option>
+                                <option value="4">Winter</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="yr">Year</label>
+                            <select id="yr" name="yr" required>
+                                <option value="0">2011</option>
+                                <option value="1" selected>2012</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mnth">Month</label>
+                            <select id="mnth" name="mnth" required>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9" selected>September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hr">Hour</label>
+                            <input type="number" id="hr" name="hr" min="0" max="23" value="17" required>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Day Features -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="weekday">Weekday</label>
+                            <select id="weekday" name="weekday" required>
+                                <option value="0">Sunday</option>
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4" selected>Thursday</option>
+                                <option value="5">Friday</option>
+                                <option value="6">Saturday</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="holiday">Holiday</label>
+                            <select id="holiday" name="holiday" required>
+                                <option value="0" selected>No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="workingday">Working Day</label>
+                            <select id="workingday" name="workingday" required>
+                                <option value="0">No</option>
+                                <option value="1" selected>Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="weathersit">Weather</label>
+                            <select id="weathersit" name="weathersit" required>
+                                <option value="1" selected>Clear</option>
+                                <option value="2">Mist/Cloudy</option>
+                                <option value="3">Light Rain/Snow</option>
+                                <option value="4">Heavy Rain</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Weather Features -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="temp">Temperature</label>
+                            <div class="slider-container">
+                                <input type="range" id="temp" name="temp" min="0" max="1" step="0.01" value="0.76">
+                                <span class="slider-value" id="tempValue">31°C</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="atemp">Feels Like</label>
+                            <div class="slider-container">
+                                <input type="range" id="atemp" name="atemp" min="0" max="1" step="0.01" value="0.72">
+                                <span class="slider-value" id="atempValue">36°C</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="hum">Humidity</label>
+                            <div class="slider-container">
+                                <input type="range" id="hum" name="hum" min="0" max="1" step="0.01" value="0.45">
+                                <span class="slider-value" id="humValue">45%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="windspeed">Wind Speed</label>
+                            <div class="slider-container">
+                                <input type="range" id="windspeed" name="windspeed" min="0" max="1" step="0.01"
+                                    value="0.15">
+                                <span class="slider-value" id="windspeedValue">10 km/h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-predict" id="predictBtn">
+                        <span class="btn-text">Predict Demand</span>
+                        <span class="btn-loading" style="display: none;">
+                            <span class="spinner"></span> Predicting...
+                        </span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Result Card -->
+            <div class="card result-card" id="resultCard" style="display: none;">
+                <h2>Prediction Result</h2>
+                <div class="result-content">
+                    <div class="result-number" id="predictionValue">0</div>
+                    <div class="result-label">Predicted Bike Rentals</div>
+                    <div class="result-message" id="resultMessage"></div>
+                </div>
+                <div class="result-gauge">
+                    <div class="gauge-bar" id="gaugeBar"></div>
+                </div>
+                <div class="gauge-labels">
+                    <span>Low</span>
+                    <span>Medium</span>
+                    <span>High</span>
+                </div>
+            </div>
+
+            <!-- Error Card -->
+            <div class="card error-card" id="errorCard" style="display: none;">
+                <h2>Error</h2>
+                <p id="errorMessage"></p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with FastAPI & Machine Learning |
+                <a href="/docs" target="_blank">API Docs</a> |
+                <a href="/health" target="_blank">Health Check</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
